@@ -2,7 +2,11 @@ import express from "express";
 import validateBody from "../helpers/validateBody.js";
 import isEmptyBody from "../middlewares/emptyBodyCheck.js";
 
-import { authSignupSchema, authSigninSchema } from "../schemas/authSchemas.js";
+import {
+  authSignupSchema,
+  authSigninSchema,
+  changeThemeSchema,
+} from "../schemas/authSchemas.js";
 
 import authControllers from "../controllers/authControllers.js";
 import authenticate from "../middlewares/authenticate.js";
@@ -26,5 +30,12 @@ authRouter.post(
 authRouter.get("/current", authenticate, authControllers.getCurrent);
 
 authRouter.post("/logout", authenticate, authControllers.signout);
+
+authRouter.post(
+  "/:id/theme",
+  isEmptyBody,
+  validateBody(changeThemeSchema),
+  authControllers.changeTheme
+);
 
 export default authRouter;

@@ -9,7 +9,7 @@ import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import { createToken } from "../helpers/jwt.js";
 
 const signup = async (req, res) => {
-  const { email, password, username } = req.body;
+  const { email, password } = req.body;
 
   const user = await authServices.findUser({ email });
 
@@ -22,11 +22,13 @@ const signup = async (req, res) => {
   const newUser = await authServices.signup({
     ...req.body,
     password: hashPassword,
+    theme: "light",
   });
 
   res.status(201).json({
     username: newUser.username,
     email: newUser.email,
+    theme: newUser.theme,
   });
 };
 
@@ -55,6 +57,7 @@ const signin = async (req, res) => {
     user: {
       username: user.username,
       email: user.email,
+      theme: user.theme,
     },
   });
 };
@@ -77,9 +80,20 @@ const signout = async (req, res) => {
   });
 };
 
+const changeTheme = async (req, res) => {
+  const { id: _id } = req.params;
+  const result = await authServices.updateUser({ _id }, req.body);
+  if (!result) {
+    throw HttpError(404);
+  }
+  const { username, email, theme } = result;
+  res.status(200).json({ username, email, theme });
+};
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   getCurrent: ctrlWrapper(getCurrent),
   signout: ctrlWrapper(signout),
+  changeTheme: ctrlWrapper(changeTheme),
 };

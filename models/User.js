@@ -18,6 +18,11 @@ const userSchema = new Schema(
       required: [true, "Email is required"],
       unique: true,
     },
+    theme: {
+      type: String,
+      enum: ["light", "dark", "violet"],
+      default: "light",
+    },
     token: String,
   },
   { versionKey: false }
