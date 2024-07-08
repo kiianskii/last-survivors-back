@@ -53,7 +53,7 @@ const signin = async (req, res) => {
   res.json({
     token,
     user: {
-      username: newUser.username,
+      username: user.username,
       email: user.email,
     },
   });
