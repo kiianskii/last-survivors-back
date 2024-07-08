@@ -6,6 +6,11 @@ export const authSignupSchema = Joi.object({
   email: Joi.string()
     .pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
     .required(),
+  theme: Joi.alternatives().try(
+    Joi.string().valid("light"),
+    Joi.string().valid("dark"),
+    Joi.string().valid("violet")
+  ),
 });
 
 export const authSigninSchema = Joi.object({
@@ -13,4 +18,12 @@ export const authSigninSchema = Joi.object({
   email: Joi.string()
     .pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
     .required(),
+});
+
+export const changeThemeSchema = Joi.object({
+  theme: Joi.alternatives().try(
+    Joi.string().valid("light"),
+    Joi.string().valid("dark"),
+    Joi.string().valid("violet")
+  ),
 });
