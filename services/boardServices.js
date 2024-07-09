@@ -5,6 +5,7 @@ async function getBoards(filter) {
 }
 
 async function getBoardById(filter) {
+    const board = Board.findOne(filter);
     return Board.findOne(filter);
 }
 
@@ -32,5 +33,5 @@ export default {
     addBoard,
     updateBoardById,
     deleteBoardById,
-    findBoard
+    findBoard,
 };

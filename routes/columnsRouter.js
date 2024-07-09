@@ -3,10 +3,10 @@ import isEmptyBody from "../middlewares/emptyBodyCheck.js";
 import authenticate from "../middlewares/authenticate.js";
 import idValid from "../middlewares/idValid.js";
 import {
-  createColumn,
-  deleteColumn,
-  getAllColumns,
-  updateColumn,
+    createColumn,
+    deleteColumn,
+    getAllColumns,
+    updateColumn,
 } from "../controllers/columnControllers.js";
 
 const columnsRouter = express.Router();
@@ -21,4 +21,4 @@ columnsRouter.delete("/:id", idValid, deleteColumn);
 
 columnsRouter.post("/:id", idValid, isEmptyBody, updateColumn);
 
-export default cardsRouter;
+export default columnsRouter;
