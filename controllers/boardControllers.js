@@ -6,6 +6,15 @@ import {
     updateBoardSchema,
 } from "../schemas/boardSchema.js";
 import boardServices from "../services/boardServices.js";
+import { v2 as cloudinary } from "cloudinary";
+
+const { cloud_name, api_key, api_secret } = process.env;
+
+cloudinary.config({
+    cloud_name,
+    api_key,
+    api_secret,
+});
 
 const getBoards = async (req, res, next) => {
     const { _id: owner_id } = req.user;
@@ -39,6 +48,17 @@ const createBoard = async (req, res, next) => {
         throw HttpError(409, "Board with this name already exists");
     }
 
+    if (req.file) {
+        const { path } = req.file;
+        let uploadResult;
+        await cloudinary.uploader
+            .upload(path)
+            .then((result) => (uploadResult = result.secure_url));
+        req.body.background_url = uploadResult;
+    } else if (!Object.keys(req.body).length) {
+        return next(HttpError(400, "Body must have at least one field"));
+    }
+
     const result = await boardServices.addBoard({
         ...req.body,
         owner_id,
@@ -60,6 +80,17 @@ const updateBoard = async (req, res, next) => {
     const board = await boardServices.findBoard({ name, owner_id });
     if (board) {
         throw HttpError(409, "Board with this name already exists");
+    }
+
+    if (req.file) {
+        const { path } = req.file;
+        let uploadResult;
+        await cloudinary.uploader
+            .upload(path)
+            .then((result) => (uploadResult = result.secure_url));
+        req.body.background_url = uploadResult;
+    } else if (!Object.keys(req.body).length) {
+        return next(HttpError(400, "Body must have at least one field"));
     }
 
     const result = await boardServices.updateBoardById(filter, req.body);
