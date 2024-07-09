@@ -1,4 +1,3 @@
-import { required } from "joi";
 import { Schema, model } from "mongoose";
 import { handleError, setUpdateSettings } from "./hooks.js";
 

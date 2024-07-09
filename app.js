@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 
 import authRouter from "./routes/authRouter.js";
 import cardsRouter from "./routes/cardsRouter.js";
+import userRouter from "./routes/userRouter.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use("/api/cards", cardsRouter);
+app.use("/api/user", userRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
