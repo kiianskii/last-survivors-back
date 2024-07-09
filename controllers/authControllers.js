@@ -26,6 +26,7 @@ const signup = async (req, res) => {
   });
 
   res.status(201).json({
+    id: newUser._id,
     username: newUser.username,
     email: newUser.email,
     theme: newUser.theme,
@@ -55,6 +56,7 @@ const signin = async (req, res) => {
   res.json({
     token,
     user: {
+      id: user._id,
       username: user.username,
       email: user.email,
       theme: user.theme,
@@ -63,11 +65,13 @@ const signin = async (req, res) => {
 };
 
 const getCurrent = (req, res) => {
-  const { email, username } = req.user;
+  const { email, username, theme, _id } = req.user;
 
   res.json({
+    id: _id,
     username,
     email,
+    theme,
   });
 };
 
@@ -80,20 +84,9 @@ const signout = async (req, res) => {
   });
 };
 
-const changeTheme = async (req, res) => {
-  const { id: _id } = req.params;
-  const result = await authServices.updateUser({ _id }, req.body);
-  if (!result) {
-    throw HttpError(404);
-  }
-  const { username, email, theme } = result;
-  res.status(200).json({ username, email, theme });
-};
-
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   getCurrent: ctrlWrapper(getCurrent),
   signout: ctrlWrapper(signout),
-  changeTheme: ctrlWrapper(changeTheme),
 };
