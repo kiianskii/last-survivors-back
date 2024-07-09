@@ -63,11 +63,12 @@ const signin = async (req, res) => {
 };
 
 const getCurrent = (req, res) => {
-  const { email, username } = req.user;
+  const { email, username, theme } = req.user;
 
   res.json({
     username,
     email,
+    theme,
   });
 };
 
