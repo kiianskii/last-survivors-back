@@ -8,6 +8,7 @@ import {
 import boardServices from "../services/boardServices.js";
 import { v2 as cloudinary } from "cloudinary";
 
+import * as columnServices from "../services/columnServices.js";
 const { cloud_name, api_key, api_secret } = process.env;
 
 cloudinary.config({
@@ -31,7 +32,13 @@ const getBoardByID = async (req, res, next) => {
     if (!result) {
         throw HttpError(404, `Board Not found`);
     }
-    res.json(result);
+
+    const columns = await columnServices.getColumns({
+        owner: filter.owner_id,
+        board_id: filter._id,
+    });
+    const resultWithColumns = { ...result._doc, columns };
+    res.json(resultWithColumns);
 };
 
 const createBoard = async (req, res, next) => {
