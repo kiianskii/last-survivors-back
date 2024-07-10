@@ -11,6 +11,9 @@ const boardSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "user",
         },
+        icon_id: {
+            type: Number,
+        },
         background_url: {
             type: String,
         },
