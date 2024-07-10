@@ -23,24 +23,24 @@ app.use("/api/cards", cardsRouter);
 app.use("/api/user", userRouter);
 
 app.use((_, res) => {
-    res.status(404).json({ message: "Route not found" });
+  res.status(404).json({ message: "Route not found" });
 });
 
 app.use((err, req, res, next) => {
-    const { status = 500, message = "Server error" } = err;
-    res.status(status).json({ message });
+  const { status = 500, message = "Server error" } = err;
+  res.status(status).json({ message });
 });
 
-const { DB_HOST } = process.env;
+const { DB_HOST, PORT } = process.env;
 // Add port from env
 mongoose
-    .connect(DB_HOST)
-    .then(() => {
-        app.listen(3000, () => {
-            console.log("Database connection successful");
-        });
-    })
-    .catch((error) => {
-        console.log(error.message);
-        process.exit(1);
+  .connect(DB_HOST)
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log("Database connection successful");
     });
+  })
+  .catch((error) => {
+    console.log(error.message);
+    process.exit(1);
+  });
