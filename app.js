@@ -4,11 +4,15 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
+import swaggerUi from "swagger-ui-express";
+
 import authRouter from "./routes/authRouter.js";
 import boardRouter from "./routes/boardRouter.js";
 import cardsRouter from "./routes/cardsRouter.js";
 import userRouter from "./routes/userRouter.js";
 import columnsRouter from "./routes/columnsRouter.js";
+
+import swaggerDocument from "./swagger.json" assert { type: "json" };
 
 dotenv.config();
 
@@ -18,6 +22,7 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/auth", authRouter);
 app.use("/api/board", boardRouter);
 app.use("/api/cards", cardsRouter);
