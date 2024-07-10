@@ -8,6 +8,7 @@ import authRouter from "./routes/authRouter.js";
 import boardRouter from "./routes/boardRouter.js";
 import cardsRouter from "./routes/cardsRouter.js";
 import userRouter from "./routes/userRouter.js";
+import columnsRouter from "./routes/columnsRouter.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/board", boardRouter);
 app.use("/api/cards", cardsRouter);
 app.use("/api/user", userRouter);
+app.use("/api/columns", columnsRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
@@ -32,7 +34,7 @@ app.use((err, req, res, next) => {
 });
 
 const { DB_HOST, PORT } = process.env;
-// Add port from env
+
 mongoose
   .connect(DB_HOST)
   .then(() => {

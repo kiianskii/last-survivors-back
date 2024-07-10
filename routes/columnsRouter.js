@@ -21,4 +21,4 @@ columnsRouter.delete("/:id", idValid, deleteColumn);
 
 columnsRouter.post("/:id", idValid, isEmptyBody, updateColumn);
 
-export default cardsRouter;
+export default columnsRouter;
