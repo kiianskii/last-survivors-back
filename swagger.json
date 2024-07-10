@@ -139,7 +139,7 @@
     "/api/auth/logout": {
       "post": {
         "tags": ["Auth"],
-        "summary": "Current user",
+        "summary": "User logout",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
