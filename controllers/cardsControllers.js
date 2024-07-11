@@ -5,9 +5,10 @@ import { CardAddSchema, CardUpdateSchema } from "../schemas/cardsSchemas.js";
 
 export const getAllCards = async (req, res, next) => {
   try {
-    const { _id: owner } = req.user;
+    const { board_id, column_id } = req.body;
     const filter = {
-      owner,
+      board_id,
+      column_id,
     };
     const result = await cardService.getCards(filter);
 
@@ -20,9 +21,10 @@ export const getAllCards = async (req, res, next) => {
 export const getOneCard = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { _id: owner } = req.user;
+    const { board_id, column_id } = req.body;
     const filter = {
-      owner,
+      board_id,
+      column_id,
       _id: id,
     };
     const result = await cardService.getCardById(filter);
@@ -40,9 +42,10 @@ export const getOneCard = async (req, res, next) => {
 export const deleteCard = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { _id: owner } = req.user;
+    const { board_id, column_id } = req.body;
     const filter = {
-      owner,
+      board_id,
+      column_id,
       _id: id,
     };
     const result = await cardService.deleteCard(filter);
@@ -64,8 +67,12 @@ export const createCard = async (req, res, next) => {
       throw HttpError(400, error.message);
     }
 
-    const { _id: owner } = req.user;
-    const result = await cardService.addCard({ ...req.body, owner });
+    const { board_id, column_id } = req.body;
+    const result = await cardService.addCard({
+      ...req.body,
+      board_id,
+      column_id,
+    });
 
     res.status(201).json(result);
   } catch (error) {
@@ -81,9 +88,10 @@ export const updateCard = async (req, res, next) => {
     }
 
     const { id } = req.params;
-    const { _id: owner } = req.user;
+    const { board_id, column_id } = req.body;
     const filter = {
-      owner,
+      board_id,
+      column_id,
       _id: id,
     };
 

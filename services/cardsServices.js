@@ -11,5 +11,7 @@ export const getCardById = (filter) => Card.findOne(filter);
 
 export const removeCard = (filter) => Card.findOneAndDelete(filter);
 
+export const removeAllCardsByFilter = (filter) => Card.deleteMany(filter);
+
 export const updateCardById = (filter, data) =>
   Card.findOneAndUpdate(filter, data);

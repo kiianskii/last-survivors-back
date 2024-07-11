@@ -21,9 +21,14 @@ const cardsSchema = new Schema(
       match: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
       required: true,
     },
-    owner: {
+    board_id: {
       type: Schema.Types.ObjectId,
-      ref: "users",
+      ref: "boards",
+      required: true,
+    },
+    column_id: {
+      type: Schema.Types.ObjectId,
+      ref: "columns",
       required: true,
     },
   },
