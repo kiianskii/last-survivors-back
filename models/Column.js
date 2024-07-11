@@ -7,9 +7,9 @@ const columnSchema = new Schema(
       type: String,
       required: true,
     },
-    owner: {
+    board_id: {
       type: Schema.Types.ObjectId,
-      ref: "users",
+      ref: "boards",
       required: true,
     },
   },

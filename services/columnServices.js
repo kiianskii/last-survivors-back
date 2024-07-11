@@ -7,6 +7,8 @@ export const updateColumnById = (filter, data) =>
 
 export const removeColumn = (filter) => Column.findOneAndDelete(filter);
 
+export const removeAllColumns = (filter) => Column.deleteMany(filter);
+
 export const getColumns = (params = {}) => {
   const { filter, fields, settings } = params;
   return Column.find(filter, fields, settings);

@@ -25,9 +25,9 @@ export const updateColumn = async (req, res, next) => {
       throw HttpError(400, error.message);
     }
     const { id } = req.params;
-    const { _id: owner } = req.user;
+    const { board_id } = req.body;
     const filter = {
-      owner,
+      board_id,
       _id: id,
     };
 
@@ -46,9 +46,10 @@ export const updateColumn = async (req, res, next) => {
 export const deleteColumn = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { _id: owner } = req.user;
+    const { board_id } = req.body;
+
     const filter = {
-      owner,
+      board_id,
       _id: id,
     };
     const result = await columnServices.removeColumn(filter);
@@ -65,9 +66,9 @@ export const deleteColumn = async (req, res, next) => {
 
 export const getAllColumns = async (req, res, next) => {
   try {
-    const { _id: owner } = req.user;
+    const { board_id } = req.body;
     const filter = {
-      owner,
+      board_id,
     };
     const result = await columnServices.getColumns(filter);
 
