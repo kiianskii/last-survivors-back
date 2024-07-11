@@ -1,4 +1,5 @@
 import Joi from "joi";
+import joiObjectid from "joi-objectid";
 
 export const CardAddSchema = Joi.object({
   title: Joi.string().required(),
@@ -7,6 +8,14 @@ export const CardAddSchema = Joi.object({
   deadline: Joi.string()
     .pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
     .required(),
+  board_id: Joi.objectId().required().messages({
+    "string.pattern.name": "Board ID must be a valid ObjectId",
+    "any.required": "Board ID is required",
+  }),
+  // column_id: Joi.objectId().required().messages({
+  //   "string.pattern.name": "Column ID must be a valid ObjectId",
+  //   "any.required": "Column ID is required",
+  // }),
 });
 
 export const CardUpdateSchema = Joi.object({
@@ -16,4 +25,12 @@ export const CardUpdateSchema = Joi.object({
   deadline: Joi.string().pattern(
     /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
   ),
+  board_id: Joi.objectId().required().messages({
+    "string.pattern.name": "Board ID must be a valid ObjectId",
+    "any.required": "Board ID is required",
+  }),
+  // column_id: Joi.objectId().required().messages({
+  //   "string.pattern.name": "Column ID must be a valid ObjectId",
+  //   "any.required": "Column ID is required",
+  // }),
 });
