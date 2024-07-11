@@ -117,7 +117,7 @@ const deleteBoard = async (req, res, next) => {
     if (!result) {
         throw HttpError(404, `Board Not found`);
     }
-    res.json(columnFilter);
+    res.json(result);
 };
 
 export default {
