@@ -106,3 +106,31 @@ export const updateCard = async (req, res, next) => {
     next(error);
   }
 };
+
+export const changeIdColumn = async (req, res, next) => {
+  try {
+    const { error } = CardUpdateSchema.validate(req.body);
+    if (error) {
+      throw HttpError(400, error.message);
+    }
+
+    const { id } = req.params;
+    const { board_id } = req.body;
+    const filter = {
+      board_id,
+      _id: id,
+    };
+
+    const result = await cardService.changeColumnId(filter, {
+      column_id: req.body.column_id,
+    });
+
+    if (!result) {
+      throw HttpError(404);
+    }
+
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};

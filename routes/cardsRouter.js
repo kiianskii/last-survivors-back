@@ -8,6 +8,7 @@ import {
   createCard,
   deleteCard,
   updateCard,
+  changeIdColumn,
 } from "../controllers/cardsControllers.js";
 
 const cardsRouter = express.Router();
@@ -23,5 +24,7 @@ cardsRouter.post("/", createCard);
 cardsRouter.delete("/:id", deleteCard);
 
 cardsRouter.put("/:id", isEmptyBody, updateCard);
+
+cardsRouter.patch("/:id", isEmptyBody, changeIdColumn);
 
 export default cardsRouter;
