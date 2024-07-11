@@ -110,9 +110,12 @@ const updateBoard = async (req, res, next) => {
 
 const deleteBoard = async (req, res, next) => {
     const filter = getFilterWith.OwnerId(req);
+    const { id } = req.params;
+    const columnFilter = { board_id: id };
+    await columnServices.removeAllColumns(columnFilter);
     const result = await boardServices.deleteBoardById(filter);
     if (!result) {
-        throw HttpError(404, `Not found`);
+        throw HttpError(404, `Board Not found`);
     }
     res.json(result);
 };
