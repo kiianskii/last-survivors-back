@@ -6,6 +6,7 @@ import {
   createColumn,
   deleteColumn,
   getAllColumns,
+  getColumnById,
   updateColumn,
 } from "../controllers/columnControllers.js";
 
@@ -14,6 +15,8 @@ const columnsRouter = express.Router();
 columnsRouter.use(authenticate);
 
 columnsRouter.get("/", getAllColumns);
+
+columnsRouter.get("/:id", idValid, getColumnById);
 
 columnsRouter.post("/", isEmptyBody, createColumn);
 
