@@ -19,6 +19,6 @@ columnsRouter.post("/", isEmptyBody, createColumn);
 
 columnsRouter.delete("/:id", idValid, deleteColumn);
 
-columnsRouter.post("/:id", idValid, isEmptyBody, updateColumn);
+columnsRouter.patch("/:id", idValid, isEmptyBody, updateColumn);
 
 export default columnsRouter;
