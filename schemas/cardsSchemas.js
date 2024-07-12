@@ -1,4 +1,7 @@
 import Joi from "joi";
+import joiObjectId from "joi-objectid";
+
+Joi.objectId = joiObjectId(Joi);
 
 export const CardAddSchema = Joi.object({
   title: Joi.string().required(),
@@ -7,6 +10,8 @@ export const CardAddSchema = Joi.object({
   deadline: Joi.string()
     .pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
     .required(),
+  board_id: Joi.objectId().required(),
+  column_id: Joi.objectId().required(),
 });
 
 export const CardUpdateSchema = Joi.object({
@@ -16,4 +21,6 @@ export const CardUpdateSchema = Joi.object({
   deadline: Joi.string().pattern(
     /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
   ),
+  board_id: Joi.objectId().required(),
+  column_id: Joi.objectId().required(),
 });
