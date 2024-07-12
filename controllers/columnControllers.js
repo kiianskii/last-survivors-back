@@ -65,13 +65,15 @@ export const deleteColumn = async (req, res, next) => {
       board_id,
       _id: id,
     };
+
+    const cardFilter = { column_id: id };
+    const remCards = await removeAllCardsByFilter(cardFilter);
+
     const result = await columnServices.removeColumn(filter);
 
     if (!result) {
       throw HttpError(404);
     }
-
-    const delCards = removeAllCardsByFilter({ board_id, column_id: id });
 
     res.json(result);
   } catch (error) {
@@ -88,24 +90,43 @@ export const getAllColumns = async (req, res, next) => {
     const filter = {
       board_id,
     };
-    const columns = await columnServices.getColumns(filter);
+    const columns = await columnServices.getColumns({ filter });
 
-    // const result = await Promise.all(
-    //   columns.map(async (column) => {
-    //     const filter = {
-    //       board_id: column.board_id,
-    //       column_id: column._id,
-    //     };
-    //     const cards = await getCards(filter);
-    //     if (cards) {
-    //       return { ...column, cards };
-    //     } else {
-    //       return column;
-    //     }
-    //   })
-    // );
+    const result = await Promise.all(
+      columns.map(async (column) => {
+        const filter = {
+          board_id: column.board_id,
+          column_id: column._id,
+        };
+        const cards = await getCards({ filter });
+        if (cards) {
+          return { ...column._doc, cards };
+        } else {
+          return column;
+        }
+      })
+    );
 
-    res.json(columns);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getColumnById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { board_id } = req.body;
+    if (!board_id) {
+      throw HttpError(400, error.message);
+    }
+    const filter = {
+      _id: id,
+      board_id,
+    };
+    const column = await columnServices.getColumns({ filter });
+
+    res.json(column);
   } catch (error) {
     next(error);
   }
