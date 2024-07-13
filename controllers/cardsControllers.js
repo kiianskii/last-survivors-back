@@ -42,10 +42,8 @@ export const getOneCard = async (req, res, next) => {
 export const deleteCard = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { board_id, column_id } = req.body;
+    // const { board_id, column_id } = req.body;
     const filter = {
-      board_id,
-      column_id,
       _id: id,
     };
     const result = await cardService.removeCard(filter);
