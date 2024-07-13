@@ -41,7 +41,6 @@ export const getOneCard = async (req, res, next) => {
 
 export const deleteCard = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { id } = req.params;
     const { board_id, column_id } = req.body;
     const filter = {
