@@ -10,7 +10,7 @@ export const getAllCards = async (req, res, next) => {
       board_id,
       column_id,
     };
-    const result = await cardService.getCards(filter);
+    const result = await cardService.getCards({ filter });
 
     res.json(result);
   } catch (error) {
@@ -48,7 +48,7 @@ export const deleteCard = async (req, res, next) => {
       column_id,
       _id: id,
     };
-    const result = await cardService.deleteCard(filter);
+    const result = await cardService.removeCard(filter);
 
     if (!result) {
       throw HttpError(404);
