@@ -14,7 +14,6 @@ import cloudinary from "../helpers/cloudinary.js";
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
-    console.log(process.env.PORT);
   const user = await authServices.findUser({ email });
 
   if (user) {
