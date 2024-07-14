@@ -11,6 +11,8 @@ export const authSignupSchema = Joi.object({
     Joi.string().valid("dark"),
     Joi.string().valid("violet")
   ),
+ avatarUrl: Joi.string()
+
 });
 
 export const authSigninSchema = Joi.object({

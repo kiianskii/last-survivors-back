@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 
+import fs from "fs/promises";
+
 import HttpError from "../helpers/HttpError.js";
 
 import * as authServices from "../services/authServices.js";
@@ -8,9 +10,11 @@ import ctrlWrapper from "../helpers/ctrlWrapper.js";
 
 import { createToken } from "../helpers/jwt.js";
 
+import cloudinary from "../helpers/cloudinary.js";
+
 const signup = async (req, res) => {
   const { email, password } = req.body;
-
+    console.log(process.env.PORT);
   const user = await authServices.findUser({ email });
 
   if (user) {
@@ -84,9 +88,29 @@ const signout = async (req, res) => {
   });
 };
 
+const updateAvatar = async (req, res) => {
+  try {
+    const {url: avatarURL} = await cloudinary.uploader.upload(req.file.path, {
+        folder: "avatars"
+    });
+    const {_id: owner} = req.user;
+    await authServices.updateAvatar(owner, avatarURL);
+    res.status(201).json({avatarURL});
+    
+}
+catch(error) {
+    console.log(error.message);
+    throw error;
+}
+finally {
+    await fs.unlink(req.file.path);
+}
+};
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   getCurrent: ctrlWrapper(getCurrent),
   signout: ctrlWrapper(signout),
+  updateAvatar: ctrlWrapper(updateAvatar)
 };

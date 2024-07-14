@@ -5,3 +5,5 @@ export const findUser = (filter) => User.findOne(filter);
 export const updateUser = (filter, data) => User.findOneAndUpdate(filter, data);
 
 export const signup = (data) => User.create(data);
+
+export const updateAvatar = (id, avatarURL) => User.findOneAndUpdate(id,  {avatarURL} );
