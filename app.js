@@ -11,6 +11,7 @@ import boardRouter from "./routes/boardRouter.js";
 import cardsRouter from "./routes/cardsRouter.js";
 import userRouter from "./routes/userRouter.js";
 import columnsRouter from "./routes/columnsRouter.js";
+import updateAvatarRouter from "./routes/updateAvatarRouter.js";
 
 import swaggerDocument from "./swagger.json" assert { type: "json" };
 
@@ -28,6 +29,8 @@ app.use("/api/board", boardRouter);
 app.use("/api/cards", cardsRouter);
 app.use("/api/user", userRouter);
 app.use("/api/columns", columnsRouter);
+app.use("/api/avatar", updateAvatarRouter)
+
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
@@ -39,7 +42,6 @@ app.use((err, req, res, next) => {
 });
 
 const { DB_HOST, PORT } = process.env;
-
 mongoose
   .connect(DB_HOST)
   .then(() => {
