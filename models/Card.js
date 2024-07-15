@@ -35,12 +35,10 @@ const cardsSchema = new Schema(
   { versionKey: false }
 );
 
-const Card = model("card", cardsSchema);
-
 cardsSchema.post("save", handleError);
-
 cardsSchema.pre("findOneAndUpdate", setUpdateSettings);
-
 cardsSchema.post("findOneAndUpdate", handleError);
+
+const Card = model("card", cardsSchema);
 
 export default Card;

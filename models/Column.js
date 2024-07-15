@@ -16,12 +16,10 @@ const columnSchema = new Schema(
   { versionKey: false }
 );
 
-const Column = model("column", columnSchema);
-
 columnSchema.post("save", handleError);
-
 columnSchema.pre("findOneAndUpdate", setUpdateSettings);
-
 columnSchema.post("findOneAndUpdate", handleError);
+
+const Column = model("column", columnSchema);
 
 export default Column;
