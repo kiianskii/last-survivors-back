@@ -11,6 +11,7 @@ import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import { createToken } from "../helpers/jwt.js";
 
 import cloudinary from "../helpers/cloudinary.js";
+import sendEmail from "../helpers/sendEmail.js";
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
@@ -89,21 +90,35 @@ const signout = async (req, res) => {
 
 const updateAvatar = async (req, res) => {
   try {
-    const {url: avatarURL} = await cloudinary.uploader.upload(req.file.path, {
-        folder: "avatars"
+    const { url: avatarURL } = await cloudinary.uploader.upload(req.file.path, {
+      folder: "avatars",
     });
-    const {_id: owner} = req.user;
+    const { _id: owner } = req.user;
     await authServices.updateAvatar(owner, avatarURL);
-    res.status(201).json({avatarURL});
-    
-}
-catch(error) {
+    res.status(201).json({ avatarURL });
+  } catch (error) {
     console.log(error.message);
     throw error;
-}
-finally {
+  } finally {
     await fs.unlink(req.file.path);
-}
+  }
+};
+
+const helpEmail = async (req, res) => {
+  const { email, message } = req.body;
+
+  const emailForSend = {
+    to: "ankiyanskiy@gmail.com",
+    subject: "Asking for help",
+    html: `<h2>Requesting email: ${email}</h2>
+    <h3>Message:${message}</h3> `,
+  };
+
+  await sendEmail(emailForSend);
+
+  res.json({
+    message: "Email send successully",
+  });
 };
 
 export default {
@@ -111,5 +126,6 @@ export default {
   signin: ctrlWrapper(signin),
   getCurrent: ctrlWrapper(getCurrent),
   signout: ctrlWrapper(signout),
-  updateAvatar: ctrlWrapper(updateAvatar)
+  updateAvatar: ctrlWrapper(updateAvatar),
+  helpEmail: ctrlWrapper(helpEmail),
 };

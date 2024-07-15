@@ -11,8 +11,7 @@ export const authSignupSchema = Joi.object({
     Joi.string().valid("dark"),
     Joi.string().valid("violet")
   ),
- avatarUrl: Joi.string()
-
+  avatarUrl: Joi.string(),
 });
 
 export const authSigninSchema = Joi.object({
@@ -20,4 +19,11 @@ export const authSigninSchema = Joi.object({
   email: Joi.string()
     .pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
     .required(),
+});
+
+export const needHelpSchema = Joi.object({
+  email: Joi.string()
+    .pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+    .required(),
+  message: Joi.string().min(3).required(),
 });
