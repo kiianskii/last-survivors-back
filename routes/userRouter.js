@@ -6,7 +6,7 @@ import userControllers from "../controllers/userControllers.js";
 
 const userRouter = express.Router();
 
-userRouter.post(
+userRouter.patch(
   "/:id",
   isEmptyBody,
   validateBody(updateUserSchema),
