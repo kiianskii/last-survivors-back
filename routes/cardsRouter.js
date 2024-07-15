@@ -23,7 +23,7 @@ cardsRouter.post("/", createCard);
 
 cardsRouter.delete("/:id", deleteCard);
 
-cardsRouter.put("/:id", isEmptyBody, updateCard);
+cardsRouter.patch("/:id", isEmptyBody, updateCard);
 
 cardsRouter.patch("/:id", isEmptyBody, changeIdColumn);
 
