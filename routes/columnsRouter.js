@@ -14,9 +14,9 @@ const columnsRouter = express.Router();
 
 columnsRouter.use(authenticate);
 
-columnsRouter.get("/", getAllColumns);
+columnsRouter.get("/:id", getAllColumns);
 
-columnsRouter.get("/:id", idValid, getColumnById);
+// columnsRouter.get("/:id", idValid, getColumnById);
 
 columnsRouter.post("/", isEmptyBody, createColumn);
 
