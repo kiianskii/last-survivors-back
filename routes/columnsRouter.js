@@ -6,7 +6,6 @@ import {
   createColumn,
   deleteColumn,
   getAllColumns,
-  getColumnById,
   updateColumn,
 } from "../controllers/columnControllers.js";
 
