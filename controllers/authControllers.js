@@ -64,18 +64,20 @@ const signin = async (req, res) => {
       username: user.username,
       email: user.email,
       theme: user.theme,
+      avatarURL: user.avatarURL,
     },
   });
 };
 
 const getCurrent = (req, res) => {
-  const { email, username, theme, _id } = req.user;
+  const { email, username, theme, _id, avatarURL } = req.user;
 
   res.json({
     id: _id,
     username,
     email,
     theme,
+    avatarURL,
   });
 };
 
