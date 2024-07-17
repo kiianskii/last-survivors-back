@@ -56,13 +56,8 @@ export const updateColumn = async (req, res, next) => {
 export const deleteColumn = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { board_id } = req.body;
 
-    if (!board_id) {
-      throw HttpError(400, error.message);
-    }
     const filter = {
-      board_id,
       _id: id,
     };
 
