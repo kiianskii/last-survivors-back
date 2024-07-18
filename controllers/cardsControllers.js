@@ -107,11 +107,6 @@ export const updateCard = async (req, res, next) => {
 
 export const changeIdColumn = async (req, res, next) => {
   try {
-    const { error } = CardUpdateSchema.validate(req.body);
-    if (error) {
-      throw HttpError(400, error.message);
-    }
-
     const { id } = req.params;
     const { board_id, oldColumn_id } = req.body;
     const filter = {
