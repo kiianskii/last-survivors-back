@@ -114,15 +114,15 @@ export const changeIdColumn = async (req, res, next) => {
       _id: id,
     };
 
-    const { data } = await cardService.changeColumnId(filter, {
+    const result = await cardService.changeColumnId(filter, {
       column_id: req.body.column_id,
     });
 
-    if (!data) {
+    if (!result) {
       throw HttpError(404);
     }
 
-    res.json({ ...data, oldColumn_id });
+    res.json({ ...result, oldColumn_id });
   } catch (error) {
     next(error);
   }
