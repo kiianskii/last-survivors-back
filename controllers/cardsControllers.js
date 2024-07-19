@@ -122,7 +122,7 @@ export const changeIdColumn = async (req, res, next) => {
       throw HttpError(404);
     }
 
-    res.json({ ...result, oldColumn_id });
+    res.json({ ...result._doc, oldColumn_id });
   } catch (error) {
     next(error);
   }
