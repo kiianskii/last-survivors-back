@@ -28,16 +28,16 @@ const getBoards = async (req, res, next) => {
 
 const getBoardByID = async (req, res, next) => {
     const filter = getFilterWith.OwnerId(req);
+    const columnFilter = {
+        board_id: filter._id,
+    };
     const result = await boardServices.getBoardById(filter);
     if (!result) {
         throw HttpError(404, `Board Not found`);
     }
 
-    const columns = await columnServices.getColumns({
-        owner: filter.owner_id,
-        board_id: filter._id,
-    });
-    const resultWithColumns = { ...result._doc, columns };
+    const columns = await columnServices.getColumns(columnFilter);
+    const resultWithColumns = columns ? { ...result._doc, columns } : result;
     res.json(resultWithColumns);
 };
 
