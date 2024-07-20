@@ -25,6 +25,6 @@ cardsRouter.delete("/:id", deleteCard);
 
 cardsRouter.patch("/:id", isEmptyBody, updateCard);
 
-cardsRouter.patch("/:id", isEmptyBody, changeIdColumn);
+cardsRouter.patch("/column/:id", isEmptyBody, changeIdColumn);
 
 export default cardsRouter;
