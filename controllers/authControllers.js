@@ -29,11 +29,20 @@ const signup = async (req, res) => {
     theme: "light",
   });
 
+  const payload = {
+    id: newUser._id,
+  };
+
+  const token = createToken(payload);
+
+  await authServices.updateUser({ _id: newUser._id }, { token });
+
   res.status(201).json({
     id: newUser._id,
     username: newUser.username,
     email: newUser.email,
     theme: newUser.theme,
+    token: token,
   });
 };
 
