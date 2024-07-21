@@ -7,9 +7,3 @@ export const ColumnAddSchema = Joi.object({
   title: Joi.string().min(3).required(),
   board_id: Joi.objectId().required(),
 });
-
-// export const ColumnUpdateSchema = Joi.object({
-//   title: Joi.string().min(3).required(),
-//   board_id: Joi.objectId().required(),
-//   id: Joi.objectId().required(),
-// });

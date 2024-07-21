@@ -109,21 +109,36 @@ export const getAllColumns = async (req, res, next) => {
   }
 };
 
-// export const getColumnById = async (req, res, next) => {
-//   try {
-//     const { id } = req.params;
-//     const { board_id } = req.body;
-//     if (!board_id) {
-//       throw HttpError(400, error.message);
-//     }
-//     const filter = {
-//       _id: id,
-//       board_id,
-//     };
-//     const column = await columnServices.getColumns({ filter });
+export const getColumnsFiltered = async (req, res, next) => {
+  try {
+    const { board_id } = req.params;
+    const { priority } = req.body;
+    if (!board_id) {
+      throw HttpError(400, error.message);
+    }
+    const filter = {
+      board_id,
+    };
+    const columns = await columnServices.getColumns({ filter });
 
-//     res.json(column);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+    const result = await Promise.all(
+      columns.map(async (column) => {
+        const filter = {
+          board_id: column.board_id,
+          column_id: column._id,
+          priority,
+        };
+        const cards = await getCards({ filter });
+        if (cards) {
+          return { ...column._doc, cards };
+        } else {
+          return column;
+        }
+      })
+    );
+
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
