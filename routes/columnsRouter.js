@@ -6,6 +6,7 @@ import {
   createColumn,
   deleteColumn,
   getAllColumns,
+  getColumnsFiltered,
   updateColumn,
 } from "../controllers/columnControllers.js";
 
@@ -15,7 +16,7 @@ columnsRouter.use(authenticate);
 
 columnsRouter.get("/:id", getAllColumns);
 
-// columnsRouter.get("/:id", idValid, getColumnById);
+columnsRouter.post("/:board_id", isEmptyBody, getColumnsFiltered);
 
 columnsRouter.post("/", isEmptyBody, createColumn);
 
